@@ -1,6 +1,6 @@
 <?php
 
-namespace Szabomikierno\GoogleCalendarL5Wrapper\Controllers;
+namespace Szabomikierno\GoogleCalendarLaravelWrapper\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

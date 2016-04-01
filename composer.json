@@ -1,5 +1,5 @@
 {
-    "name": "szabomikierno/googlecalendarl5wrapper",
+    "name": "Szabomikierno/GoogleCalendarLaravelWrapper",
     "description": "Lararavel 5 wrapper for Google Calendar API",
     "license": "MIT",
     "authors": [
@@ -9,5 +9,12 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "google/apiclient": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Szabomikierno\\GoogleCalendarLaravelWrapper\\": "src/"
+        }
+    }
 }

@@ -1,8 +1,10 @@
 <?php
 
-namespace Szabomikierno\GoogleCalendarL5Wrapper;
+namespace Szabomikierno\GoogleCalendarLaravelWrapper;
 
 use Illuminate\Support\ServiceProvider;
+use Google_Client;
+
 
 class GoogleCalendarServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,9 @@ class GoogleCalendarServiceProvider extends ServiceProvider
     {
         include __DIR__ . '/routes.php';
 
-
+        $this->publishes([
+            __DIR__ . '/../config/GoogleCalendar.php' => \config_path('GoogleCalendar.php'),
+        ], 'config');
     }
 
     /**
@@ -25,8 +29,15 @@ class GoogleCalendarServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['googlecalendar'] = $this->app->share(function ($app) {
-            return new GoogleCalendarWrapper;
+        include __DIR__ . '/../vendor/autoload.php';
+
+        $credentials = config('GoogleCalendar.credentials');
+
+        $client = new \Google_Client;
+
+        $this->app->bind('Szabomikierno\GoogleCalendarLaravelWrapper\GoogleCalendar', function($client, $credentials){
+            return new GoogleCalendar($client, $credentials);
         });
+
     }
 }
