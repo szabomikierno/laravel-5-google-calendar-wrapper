@@ -1,0 +1,13 @@
+{
+    "name": "szabomikierno/googlecalendarl5wrapper",
+    "description": "Lararavel 5 wrapper for Google Calendar API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Szabo Miklos",
+            "email": "me@szabomikierno.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
