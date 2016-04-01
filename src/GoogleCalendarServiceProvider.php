@@ -3,8 +3,6 @@
 namespace Szabomikierno\GoogleCalendarLaravelWrapper;
 
 use Illuminate\Support\ServiceProvider;
-use Google_Client;
-
 
 class GoogleCalendarServiceProvider extends ServiceProvider
 {
@@ -35,7 +33,7 @@ class GoogleCalendarServiceProvider extends ServiceProvider
 
         $client = new \Google_Client;
 
-        $this->app->bind('Szabomikierno\GoogleCalendarLaravelWrapper\GoogleCalendar', function($client, $credentials){
+        $this->app->bind('Szabomikierno\GoogleCalendarLaravelWrapper\GoogleCalendar', function() use ($client, $credentials) {
             return new GoogleCalendar($client, $credentials);
         });
 
