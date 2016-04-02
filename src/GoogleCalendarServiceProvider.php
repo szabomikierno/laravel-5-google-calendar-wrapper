@@ -13,8 +13,6 @@ class GoogleCalendarServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        include __DIR__ . '/routes.php';
-
         $this->publishes([
             __DIR__ . '/../config/GoogleCalendar.php' => \config_path('GoogleCalendar.php'),
         ], 'config');

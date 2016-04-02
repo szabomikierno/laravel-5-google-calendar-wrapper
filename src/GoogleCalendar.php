@@ -10,11 +10,9 @@ class GoogleCalendar{
 	
 	private $credentials;
 
-	private $accessToken;
+	public $redirectUri;
 
-	private $redirectUri;
-
-	private $token;
+	public $token;
 
 	function __construct($gClient, $credentials) {
 
@@ -35,35 +33,24 @@ class GoogleCalendar{
 
 	}
 
-	public function setToken($token) {
-		$this->token = $token;
-		return $this;
+	public function authenticate($authCode = '') {
+		$token = $this->gClient->authenticate($authCode);
+
+		return $this->sign($token);
 	}
 
-	public function authenticate($authCode = '') {
+	public function sign($token) {
 
-		if($authCode != '') {
-
-		    $this->token = $this->gClient->authenticate($authCode);
-
-		} else if(!isset($this->token)) {
-			dd('Unauthorized request');
-		}
-
-		$this->gClient->setAccessToken($this->token);
+		$this->gClient->setAccessToken($token);
 		
 		if ($this->gClient->isAccessTokenExpired()) {
 			$this->gClient->refreshToken($this->gClient->getRefreshToken());
-			$this->token = $this->gClient->getAccessToken();
 		}
 
 		$this->gCalendar = new \Google_Service_Calendar($this->gClient);
 		
-		return $this;
-	}
+		return $this->gCalendar;
 
-	public function getToken() {
-		return $this->accessToken;
 	}
 
 	public function getAuthUrl() {
@@ -75,23 +62,6 @@ class GoogleCalendar{
 		$this->gClient->setRedirectUri($this->redirectUri);
 		
 		return filter_var($this->gClient->createAuthUrl(), FILTER_SANITIZE_URL);
-	}
-
-	public function getEvents($calendarId = 'primary', $maxResults = 10, $q = '') {
-		if(!isset($this->gCalendar)){
-			dd("Unauthorized request");
-		}
-		$optParams = array(
-		  'maxResults' => $maxResults,
-		  'orderBy' => 'startTime',
-		  'singleEvents' => TRUE,
-		  'timeMin' => date('c'),
-		  'q' => $q
-		);
-
-		$results = $this->gCalendar->events->listEvents($calendarId, $optParams);
-
-		return $results;		
 	}
 
 	public function setRedirectUri($redirectUri) {
