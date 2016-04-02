@@ -1,5 +1,5 @@
 {
-    "name": "Szabomikierno/GoogleCalendarLaravelWrapper",
+    "name": "szabomikierno/google-calendar-laravel-wrapper",
     "description": "Lararavel 5 wrapper for Google Calendar API",
     "license": "MIT",
     "authors": [
